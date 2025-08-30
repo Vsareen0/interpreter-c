@@ -100,6 +100,7 @@ void tokenize(const char *filename) {
                 printf("SLASH / null\n");
             } else if (file_contents[i] != 10) {
                 printf("[line %d] Error: Unexpected character: %c\n", line_number, file_contents[i]);
+                exit((int)(file_contents[i]+1));
             }
             i++;
         }
