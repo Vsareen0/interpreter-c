@@ -65,6 +65,7 @@ char *read_file_contents(const char *filename) {
 
 void tokenize(const char *filename) {
     int i = 0;
+    int line_number = 1;
         
     char *file_contents = read_file_contents(filename);
 
@@ -72,6 +73,9 @@ void tokenize(const char *filename) {
     if (strlen(file_contents) > 0) {
         // fprintf(stderr, "Scanner not implemented\n");
         while (file_contents[i] != '\0') {
+            if (file_contents[i] == 10) {
+                line_number++;
+            }
             if (file_contents[i] == '(') {
                 printf("LEFT_PAREN ( null\n");
             } else if (file_contents[i] == ')') {
@@ -94,6 +98,8 @@ void tokenize(const char *filename) {
                 printf("STAR * null\n");
             }  else if (file_contents[i] == '/') {
                 printf("SLASH / null\n");
+            } else if (file_contents[i] != 10) {
+                printf("[line %d] Error: Unexpected character: %c\n", line_number, file_contents[i]);
             }
             i++;
         }
