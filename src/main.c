@@ -66,6 +66,7 @@ char *read_file_contents(const char *filename) {
 void tokenize(const char *filename) {
     int i = 0;
     int line_number = 1;
+    int error_encountered = 0;
         
     char *file_contents = read_file_contents(filename);
 
@@ -100,13 +101,15 @@ void tokenize(const char *filename) {
                 printf("SLASH / null\n");
             } else if (file_contents[i] != 10) {
                 fprintf(stderr, "[line %d] Error: Unexpected character: %c\n", line_number, file_contents[i]);
-                printf("EOF  null\n"); // Placeholder, replace this line when implementing the scanner
-                exit((int)(65));
+                error_encountered = 1;
             }
             i++;
         }
     } 
     printf("EOF  null\n"); // Placeholder, replace this line when implementing the scanner
+    if (error_encountered) {
+        exit((int)(65));   
+    }
     exit(0);
     
     free(file_contents);
