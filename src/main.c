@@ -79,9 +79,9 @@ void tokenize(const char *filename) {
             }
             i++;
         }
-        printf("EOF  null\n"); // Placeholder, replace this line when implementing the scanner
-        exit(0);
     } 
+    printf("EOF  null\n"); // Placeholder, replace this line when implementing the scanner
+    exit(0);
     
     free(file_contents);
     
