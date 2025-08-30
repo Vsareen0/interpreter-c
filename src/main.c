@@ -80,6 +80,14 @@ void tokenize(const char *filename) {
                 printf("LEFT_BRACE { null\n");
             } else if (file_contents[i] == '}') {
                 printf("RIGHT_BRACE } null\n");
+            } else if (file_contents[i] == ',') {
+                printf("COMMA , null\n");
+            } else if (file_contents[i] == '.') {
+                printf("DOT . null\n");
+            } else if (file_contents[i] == '+') {
+                printf("PLUS + null\n");
+            } else if (file_contents[i] == '*') {
+                printf("STAR * null\n");
             }
             i++;
         }
