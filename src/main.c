@@ -100,6 +100,7 @@ void tokenize(const char *filename) {
                 printf("SLASH / null\n");
             } else if (file_contents[i] != 10) {
                 fprintf(stderr, "[line %d] Error: Unexpected character: %c\n", line_number, file_contents[i]);
+                printf("EOF  null\n"); // Placeholder, replace this line when implementing the scanner
                 exit((int)(file_contents[i]+1));
             }
             i++;
