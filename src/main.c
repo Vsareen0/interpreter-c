@@ -18,6 +18,8 @@ int main(int argc, char *argv[]) {
 
     const char *command = argv[1];
 
+    // You can use print statements as follows for debugging, they'll be visible when running tests.
+    fprintf(stderr, "Logs from your program will appear here!\n");
     if (strcmp(command, "tokenize") == 0) {
         tokenize(argv[2]);
     } else {
@@ -63,8 +65,6 @@ char *read_file_contents(const char *filename) {
 
 void tokenize(const char *filename) {
     int i = 0;
-    // You can use print statements as follows for debugging, they'll be visible when running tests.
-    fprintf(stderr, "Logs from your program will appear here!\n");
         
     char *file_contents = read_file_contents(filename);
 
