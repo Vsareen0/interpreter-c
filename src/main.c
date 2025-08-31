@@ -120,8 +120,9 @@ void tokenize(const char *filename) {
             } else if (file_contents[i] == '/' && file_contents[i+1] != '/') {
                 printf("SLASH / null\n");
             } else if (file_contents[i] == '/' && file_contents[i+1] == '/') {
-                //printf("COMMENT // null\n");
-                while (file_contents[i] != 10) {
+                // printf("COMMENT // null\n");
+                while (file_contents[i] != 10 && i < strlen(file_contents)) {
+                    // printf("value of i: %d\n", i);
                     i++;
                 }
             } else if (file_contents[i] != 10) {
