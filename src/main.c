@@ -74,10 +74,20 @@ void tokenize(const char *filename) {
     if (strlen(file_contents) > 0) {
         // fprintf(stderr, "Scanner not implemented\n");
         while (file_contents[i] != '\0') {
+            /**
+             * 10 is newline
+             */
             if (file_contents[i] == 10) {
                 line_number++;
             }
-            if (file_contents[i] == '(') {
+            /**
+             * 32 is space
+             * 9 is tab
+             * 13 is carriage return
+             */
+            if (file_contents[i] == 32 || file_contents[i] == 9 || file_contents[i] == 13) {
+                // do nothing
+            } else if (file_contents[i] == '(') {
                 printf("LEFT_PAREN ( null\n");
             } else if (file_contents[i] == ')') {
                 printf("RIGHT_PAREN ) null\n");
@@ -120,9 +130,7 @@ void tokenize(const char *filename) {
             } else if (file_contents[i] == '/' && file_contents[i+1] != '/') {
                 printf("SLASH / null\n");
             } else if (file_contents[i] == '/' && file_contents[i+1] == '/') {
-                // printf("COMMENT // null\n");
                 while (file_contents[i] != 10 && i < strlen(file_contents)) {
-                    // printf("value of i: %d\n", i);
                     i++;
                 }
             } else if (file_contents[i] != 10) {
