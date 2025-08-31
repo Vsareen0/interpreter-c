@@ -97,8 +97,6 @@ void tokenize(const char *filename) {
                 printf("MINUS - null\n");
             } else if (file_contents[i] == '*') {
                 printf("STAR * null\n");
-            }  else if (file_contents[i] == '/') {
-                printf("SLASH / null\n");
             } else if (file_contents[i] == '=' && file_contents[i+1] == '=') {
                 printf("EQUAL_EQUAL == null\n");
                 i++;
@@ -119,6 +117,13 @@ void tokenize(const char *filename) {
                 i++;
             } else if (file_contents[i] == '>' && file_contents[i+1] != '=') {
                 printf("GREATER > null\n");
+            } else if (file_contents[i] == '/' && file_contents[i+1] != '/') {
+                printf("SLASH / null\n");
+            } else if (file_contents[i] == '/' && file_contents[i+1] == '/') {
+                //printf("COMMENT // null\n");
+                while (file_contents[i] != 10) {
+                    i++;
+                }
             } else if (file_contents[i] != 10) {
                 fprintf(stderr, "[line %d] Error: Unexpected character: %c\n", line_number, file_contents[i]);
                 error_encountered = 1;
