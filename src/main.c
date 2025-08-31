@@ -104,6 +104,11 @@ void tokenize(const char *filename) {
                 i++;
             } else if (file_contents[i] == '=' && file_contents[i+1] != '=') {
                 printf("EQUAL = null\n");
+            } else if (file_contents[i] == '!' && file_contents[i+1] == '=') {
+                printf("BANG_EQUAL != null\n");
+                i++;
+            } else if (file_contents[i] == '!' && file_contents[i+1] != '=') {
+                printf("BANG ! null\n");
             } else if (file_contents[i] != 10) {
                 fprintf(stderr, "[line %d] Error: Unexpected character: %c\n", line_number, file_contents[i]);
                 error_encountered = 1;
