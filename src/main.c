@@ -99,6 +99,11 @@ void tokenize(const char *filename) {
                 printf("STAR * null\n");
             }  else if (file_contents[i] == '/') {
                 printf("SLASH / null\n");
+            } else if (file_contents[i] == '=' && file_contents[i+1] == '=') {
+                printf("EQUAL_EQUAL == null\n");
+                i++;
+            } else if (file_contents[i] == '=' && file_contents[i+1] != '=') {
+                printf("EQUAL = null\n");
             } else if (file_contents[i] != 10) {
                 fprintf(stderr, "[line %d] Error: Unexpected character: %c\n", line_number, file_contents[i]);
                 error_encountered = 1;
