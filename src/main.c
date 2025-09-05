@@ -80,6 +80,7 @@ void tokenize(const char *filename) {
             if (file_contents[i] == 10) {
                 line_number++;
             }
+            
             /**
              * 32 is space
              * 9 is tab
