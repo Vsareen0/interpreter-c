@@ -131,6 +131,7 @@ void tokenize(const char *filename) {
             } else if (file_contents[i] == '/' && file_contents[i+1] != '/') {
                 printf("SLASH / null\n");
             } else if (file_contents[i] == '/' && file_contents[i+1] == '/') {
+                line_number++;
                 while (file_contents[i] != 10 && i < strlen(file_contents)) {
                     i++;
                 }
