@@ -105,6 +105,8 @@ void tokenize(const char *filename) {
                     char* str_value_without_quotes = malloc(size_without_quotes+1);
                     
                     strncpy(str_value, file_contents + start_str_idx, size);
+                    str_value[size] = '\0';
+                    
                     strncpy(str_value_without_quotes, file_contents + start_str_idx + 1, size_without_quotes);
                     str_value_without_quotes[size_without_quotes] = '\0';
 
