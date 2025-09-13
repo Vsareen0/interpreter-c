@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 char *read_file_contents(const char *filename);
 void tokenize(const char *filename);
@@ -67,6 +68,10 @@ void tokenize(const char *filename) {
     int i = 0;
     int line_number = 1;
     int error_encountered = 0;
+    int valid_str_pair = 1; // default true, i.e; there exists some valid string pair
+    // Maintain start and ending index for string pair
+    int start_str_idx = -1;
+    int end_str_idx = -1;
         
     char *file_contents = read_file_contents(filename);
 
@@ -88,6 +93,31 @@ void tokenize(const char *filename) {
              */
             if (file_contents[i] == 32 || file_contents[i] == 9 || file_contents[i] == 13) {
                 // do nothing
+            } else if (file_contents[i] == '"') {
+                if(start_str_idx > -1) {
+                    end_str_idx = i;
+                    valid_str_pair = 1;
+
+                    int size = end_str_idx - start_str_idx + 1;
+                    char* str_value = malloc(size+1);
+                    
+                    int size_without_quotes = size - 2;
+                    char* str_value_without_quotes = malloc(size_without_quotes+1);
+                    
+                    strncpy(str_value, file_contents + start_str_idx, size);
+                    strncpy(str_value_without_quotes, file_contents + start_str_idx + 1, size_without_quotes);
+
+
+                    printf("STRING %s %s\n", (char*) str_value, (char*) str_value_without_quotes);
+                    
+                    free(str_value);
+                    free(str_value_without_quotes);
+
+                    start_str_idx = -1;
+                } else {
+                    start_str_idx = i;
+                    valid_str_pair = 0;
+                }
             } else if (file_contents[i] == '(') {
                 printf("LEFT_PAREN ( null\n");
             } else if (file_contents[i] == ')') {
@@ -135,13 +165,20 @@ void tokenize(const char *filename) {
                 while (file_contents[i] != 10 && i < strlen(file_contents)) {
                     i++;
                 }
-            } else if (file_contents[i] != 10) {
+            } else if (file_contents[i] != 10 && (!isdigit(file_contents[i]) || !isalpha(file_contents[i]) || file_contents[i] != '_') && valid_str_pair) {
                 fprintf(stderr, "[line %d] Error: Unexpected character: %c\n", line_number, file_contents[i]);
                 error_encountered = 1;
             }
             i++;
         }
     } 
+
+    // handle not terminated strings
+    if (!valid_str_pair) {
+        fprintf(stderr, "[line %d] Error: Unterminated string.\n", line_number);
+        error_encountered = 1;
+    }
+
     printf("EOF  null\n"); // Placeholder, replace this line when implementing the scanner
     if (error_encountered) {
         exit((int)(65));   
