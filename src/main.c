@@ -91,7 +91,7 @@ void tokenize(const char *filename) {
              * 9 is tab
              * 13 is carriage return
              */
-            if (file_contents[i] == 32 || file_contents[i] == 9 || file_contents[i] == 13) {
+            if (file_contents[i] == 32 || file_contents[i] == 9 || file_contents[i] == 13 || (!valid_str_pair && file_contents[i] != '"')) {
                 // do nothing
             } else if (file_contents[i] == '"') {
                 if(start_str_idx > -1) {
@@ -106,7 +106,7 @@ void tokenize(const char *filename) {
                     
                     strncpy(str_value, file_contents + start_str_idx, size);
                     str_value[size] = '\0';
-                    
+
                     strncpy(str_value_without_quotes, file_contents + start_str_idx + 1, size_without_quotes);
                     str_value_without_quotes[size_without_quotes] = '\0';
 
@@ -168,7 +168,7 @@ void tokenize(const char *filename) {
                 while (file_contents[i] != 10 && i < strlen(file_contents)) {
                     i++;
                 }
-            } else if (file_contents[i] != 10 && (!isdigit(file_contents[i]) || !isalpha(file_contents[i]) || file_contents[i] != '_') && valid_str_pair) {
+            } else if (file_contents[i] != 10) {
                 fprintf(stderr, "[line %d] Error: Unexpected character: %c\n", line_number, file_contents[i]);
                 error_encountered = 1;
             }
