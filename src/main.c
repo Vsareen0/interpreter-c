@@ -106,6 +106,7 @@ void tokenize(const char *filename) {
                     
                     strncpy(str_value, file_contents + start_str_idx, size);
                     strncpy(str_value_without_quotes, file_contents + start_str_idx + 1, size_without_quotes);
+                    str_value_without_quotes[size_without_quotes] = '\0';
 
 
                     printf("STRING %s %s\n", (char*) str_value, (char*) str_value_without_quotes);
