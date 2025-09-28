@@ -179,7 +179,7 @@ void tokenize(const char *filename) {
                         i++;
                     }
                 }
-                end_num_idx = i;
+                end_num_idx = i-1;
                 int size = end_num_idx - start_num_idx + 1;
                 char* num_value = malloc(size+1);
                 
