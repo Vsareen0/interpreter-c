@@ -196,6 +196,7 @@ void tokenize(const char *filename) {
                 free(num_value);
                 
                 start_num_idx = -1;
+                i--;
             } else if (file_contents[i] != 10) {
                 fprintf(stderr, "[line %d] Error: Unexpected character: %c\n", line_number, file_contents[i]);
                 error_encountered = 1;
