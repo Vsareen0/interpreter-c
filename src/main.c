@@ -72,6 +72,9 @@ void tokenize(const char *filename) {
     // Maintain start and ending index for string pair
     int start_str_idx = -1;
     int end_str_idx = -1;
+    // Maintain start and ending index for number pair
+    int start_num_idx = -1;
+    int end_num_idx = -1;
         
     char *file_contents = read_file_contents(filename);
 
@@ -168,6 +171,31 @@ void tokenize(const char *filename) {
                 while (file_contents[i] != 10 && i < strlen(file_contents)) {
                     i++;
                 }
+            } else if (file_contents[i] >= '0' && file_contents[i] <= '9') {
+                start_num_idx = i;
+                while (file_contents[i] >= '0' && file_contents[i] <= '9' && i < strlen(file_contents)) {
+                    i++;
+                    if (file_contents[i] == '.') {
+                        i++;
+                    }
+                }
+                end_num_idx = i;
+                int size = end_num_idx - start_num_idx + 1;
+                char* num_value = malloc(size+1);
+                
+                strncpy(num_value, file_contents + start_num_idx, size);
+                num_value[size] = '\0';
+                
+                double num = atof((char*) num_value);
+                if (num == (int)num) {
+                    printf("NUMBER %s %.1f\n", (char*) num_value, num);
+                } else {
+                    printf("NUMBER %s %s\n", (char*) num_value, (char*) num_value);
+                }
+                
+                free(num_value);
+                
+                start_num_idx = -1;
             } else if (file_contents[i] != 10) {
                 fprintf(stderr, "[line %d] Error: Unexpected character: %c\n", line_number, file_contents[i]);
                 error_encountered = 1;
