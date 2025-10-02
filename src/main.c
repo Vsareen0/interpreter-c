@@ -200,9 +200,9 @@ void tokenize(const char *filename) {
                 
                 start_num_idx = -1;
                 i--;
-            } else if ((file_contents[i] >= 'a' && file_contents[i] <= 'z') || (file_contents[i] >= 'A' && file_contents[i] <= 'Z') || file_contents[i] == '_') {
+            } else if ((file_contents[i] >= 'a' && file_contents[i] <= 'z') || (file_contents[i] >= 'A' && file_contents[i] <= 'Z') || (file_contents[i] >= '0' && file_contents[i] <= '9') || file_contents[i] == '_') {
                 start_ident_idx = i;
-                while ((file_contents[i] >= 'a' && file_contents[i] <= 'z') || (file_contents[i] >= 'A' && file_contents[i] <= 'Z') || file_contents[i] == '_' && i < strlen(file_contents)) {
+                while ((file_contents[i] >= 'a' && file_contents[i] <= 'z') || (file_contents[i] >= 'A' && file_contents[i] <= 'Z') || (file_contents[i] >= '0' && file_contents[i] <= '9') || file_contents[i] == '_' && i < strlen(file_contents)) {
                     i++;
                 }
                 end_ident_idx = i-1;
