@@ -5,6 +5,7 @@
 
 char *read_file_contents(const char *filename);
 void tokenize(const char *filename);
+int map_contains(char** map, char* key);
 
 
 int main(int argc, char *argv[]) {
@@ -63,6 +64,24 @@ char *read_file_contents(const char *filename) {
     return file_contents;
 }
 
+int findElement( char** reserved_keywords, int arraySize, char* searchString)
+{
+    int foundIndex = -1;
+    for (int i = 0; i < arraySize; i++) {
+        if (strstr(reserved_keywords[i], searchString) != NULL) {
+            foundIndex = i;
+            break; // Found the string, no need to continue searching
+        }
+    }
+    return foundIndex;
+}
+
+char* upper(char* str) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        str[i] = toupper(str[i]);
+    }
+    return str;
+}
 
 void tokenize(const char *filename) {
     int i = 0;
@@ -78,7 +97,8 @@ void tokenize(const char *filename) {
     // Maintain start and ending index for identifier pair
     int start_ident_idx = -1;
     int end_ident_idx = -1;
-        
+    // Maintain a map of reserved keywords to their token type
+    char* reserved_keywords[] = {"and", "class", "else", "false", "for", "fun", "if", "nil", "or", "print", "return", "super", "this", "true", "var", "while"};
     char *file_contents = read_file_contents(filename);
 
     // Uncomment this block to pass the first stage
@@ -210,7 +230,22 @@ void tokenize(const char *filename) {
                 char* str_value = malloc(size+1);
                 strncpy(str_value, file_contents + start_ident_idx, size);
                 str_value[size] = '\0';
-                printf("IDENTIFIER %s null\n", (char*) str_value);
+
+                // Check if str_value is an reserved keyword, else print as identifier
+                // Instead of using a list of reserved keywords, we can use a map of reserved keywords to their token type
+                // For example, we can use a map of reserved keywords to their token type like this:
+                // {"and", "AND"}, {"class", "CLASS"}, {"else", "ELSE"}, {"false", "FALSE"}, {"for", "FOR"}, {"fun", "FUN"}, {"if", "IF"}, {"nil", "NIL"}, {"or", "OR"}, {"print", "PRINT"}, {"return", "RETURN"}, {"super", "SUPER"}, {"this", "THIS"}, {"true", "TRUE"}, {"var", "VAR"}, {"while", "WHILE"}
+                // Then we can use the map to check if str_value is a reserved keyword
+                // If it is, we can print the token type
+                // If it is not, we can print as identifier
+                // We can use the map to check if str_value is a reserved keyword
+                int arraySize = sizeof(reserved_keywords) / sizeof(reserved_keywords[0]);
+                if (findElement(reserved_keywords, arraySize, str_value) != -1) {
+                    printf("%s %s null\n", upper(str_value), (char*) str_value);
+                } else {
+                    printf("IDENTIFIER %s null\n", (char*) str_value);
+                }
+
                 free(str_value);
                 start_ident_idx = -1;
                 i--;
